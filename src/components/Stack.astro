@@ -1,0 +1,31 @@
+---
+import { STACK } from "@config";
+import LinkButton from "./LinkButton.astro";
+import stackIcons from "@assets/stackIcons";
+
+export interface Props {
+  centered?: boolean;
+}
+
+const { centered = false } = Astro.props;
+---
+
+<div class={`social-icons ${centered ? "flex" : ""}`}>
+  {
+    STACK.filter(stack => stack.active).map(stack => (
+      <div class="link-button" title={stack.linkTitle}>
+        <Fragment set:html={stackIcons[stack.name]} />
+        <span class="sr-only">{stack.linkTitle}</span>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .social-icons {
+    @apply flex-wrap justify-center gap-1;
+  }
+  .link-button {
+    @apply p-2 hover:rotate-6 sm:p-1;
+  }
+</style>
